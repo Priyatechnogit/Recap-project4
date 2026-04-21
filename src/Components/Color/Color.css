@@ -1,6 +1,13 @@
 .color-card {
   margin: 0px 10px;
   padding: 5px;
+  border-radius: 10px;
+  font-family: sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  
+
 }
 
 .color-card-headline {
@@ -8,4 +15,7 @@
   padding: 2px 6px;
   background: black;
   color: white;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 8px;
 }
