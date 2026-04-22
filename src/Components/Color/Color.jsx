@@ -1,21 +1,23 @@
 import "./Color.css";
 
 export default function Color({ color }) {
+  console.log("COLOR OBJECT:", color);
   return (
+    
    <div
    className="color-card"
-   style={{
-    "--bg-color": color.hex,
-    "--text-color": color.contrastText,
-    }}
+  style={{ backgroundColor: color.hex }}
+    
    >
 
-    <p className="color-card-headline">{color.hex}</p>
-    <p>{color.role}</p>
-    <p>contrast: {color.contrastText}</p>
+    <p className="hex">{color.hex}</p>
+    <p className="role">{color.role}</p>
+    <p className="contrast">{color.contrastText}</p>
       
    </div>
 
-  )
+  );
    
 }
+
+ 

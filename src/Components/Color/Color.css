@@ -4,9 +4,7 @@
   border-radius: 10px;
   font-family: sans-serif;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  
+ color: white;
 
 }
 
@@ -18,4 +16,22 @@
   border-radius: 6px;
   font-size: 14px;
   margin-bottom: 8px;
+}
+
+.hex {
+  font-size: 18px;
+  font-weight: bold;
+  background-color:black ;
+  width: fit-content; 
+
+}
+
+.role {
+  font-family: monospace;
+  opacity: 0.9;
+}
+
+.contrast {
+  font-size: 12px;
+  opacity: 0.7;
 }
