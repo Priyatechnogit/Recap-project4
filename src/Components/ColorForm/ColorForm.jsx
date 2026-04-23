@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
 //import Color from "./Color/Color";
-import ColorInput from "../ColorInput/ColorInput";
-import "./ColorForm.css"
+import ColorInput from "../ColorInput/ColorInput.jsx";
+import "./ColorForm.css";
+
 
 
 export default function ColorForm({ onAddColor, onUpdateColor, editingColor}){

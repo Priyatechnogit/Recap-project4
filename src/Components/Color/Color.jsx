@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ColorInput from "../ColorInput/ColorInput";
 import "./Color.css";
+import CopyToClipboard from "../CopyToClipboard/CopyToClipboard";
 
 export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdit, onCancel }) {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -35,9 +36,13 @@ export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdi
     >
       {!isEditing ? (
         <>
-          <p className="hex">{color.hex}</p>
+         <div className="hex-row">
+            <p className="hex">{color.hex}</p>
+            <CopyToClipboard hexValue={color.hex} />
+        </div>
           <p className="role">{color.role}</p>
           <p className="contrast">{color.contrastText}</p>
+          
 
           {!showConfirm ? (
             <button className="delete-btn" onClick={() => setShowConfirm(true)}>Delete</button>
