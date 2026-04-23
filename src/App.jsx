@@ -6,6 +6,7 @@ import { useState } from "react";
 
 function App() {
   const [colors, setColors] = useState(initialColors);
+  const [editedColor, setEditedColor] = useState(null);
 
   const addColor = (newColor) => {
     setColors((prevColors) => [newColor, ...prevColors]);
@@ -19,22 +20,47 @@ function App() {
     );
   };
 
-  return (
+  // Edit function 
+
+  const editColor = (color) => setEditedColor(color);
+  // update
+
+  const updateColor = (updatedColor) => {
+     setColors(prevColors => 
+      prevColors.map((color) => color.id === updatedColor.id?  updatedColor : color));
+      setEditedColor(null);   // edit mode exit
+     };
+
+   return (
     <>
-    <ColorForm onAddColor={addColor}/>
+      <ColorForm 
+      onAddColor={addColor} 
+      onUpdateColor={updateColor}
+      editingColor={editedColor}
+      />
+
       <h1>Theme Creator</h1>
-      
-     {/* set this as a default value for the state {initialColors.map((color) => ( */}
-     {colors.length === 0 ? (
+
+      {colors.length === 0 ? (
         <p className="color-card-highlight">
-          No colors in your theme yet...Start by adding one!!
+          No colors in your theme yet... Start by adding one!!
         </p>
       ) : (
-     colors.map((color) => (
-        <Color key={color.id} color={color} onDelete={deleteColor}  />  
-        ))
-        )}
-
+        <ul className="color-list">
+          {colors.map((color) => (
+            <li key={color.id} className="color-item">
+              <Color
+                color={color}
+                onDelete={deleteColor}
+                onEdit={() => setEditedColor(color)}
+                onCancel={() => setEditedColor(null)}
+                isEditing={editedColor?.id === color.id}
+                onUpdateColor={updateColor}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }

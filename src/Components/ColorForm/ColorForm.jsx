@@ -5,7 +5,7 @@ import ColorInput from "../ColorInput";
 import "./ColorForm.css"
 
 
-export default function ColorForm({ onAddColor }){
+export default function ColorForm({ onAddColor, onUpdateColor, editingColor}){
 const [formData ,setFormData] = useState({role:"Role",hex:"#123456",contrastText:"#ffffff"});
 
 function handleSubmit(event){
