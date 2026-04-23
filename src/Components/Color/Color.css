@@ -65,3 +65,14 @@
 .confirm-delete-btn:hover {
   opacity: 0.9;
 }
+
+.hex-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.hex-row .hex {
+  margin: 0;
+}
