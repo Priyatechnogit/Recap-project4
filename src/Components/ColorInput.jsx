@@ -1,9 +1,12 @@
 
+import "./ColorInput/ColorInput.css"
+
 export default function ColorInput( { name, value, onChange, label }){
     return (
-        <div>
+        <div className="color-input">
             <label htmlFor={name}>{label}</label>
-            <br />
+
+        <div className="input-row">    
             <input
              type="text"
              name= {name}
@@ -15,7 +18,7 @@ export default function ColorInput( { name, value, onChange, label }){
              value={value}
              onChange={onChange} />
 
-             <br />
+            </div> 
         </div>
     );
 

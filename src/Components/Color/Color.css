@@ -8,14 +8,18 @@
 
 }
 
-.color-card-headline {
-  display: inline;
-  padding: 2px 6px;
+.color-card-highlight {
+  display: inline-block;
+  padding: 4px 8px;
   background: black;
   color: white;
   border-radius: 6px;
   font-size: 14px;
   margin-bottom: 8px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+  font-size: 1.1em;
 }
 
 .hex {
@@ -23,6 +27,8 @@
   font-weight: bold;
   background-color:black ;
   width: fit-content; 
+  padding: 4px 8px;
+  border-radius: 4px;
 
 }
 
@@ -34,4 +40,28 @@
 .contrast {
   font-size: 12px;
   opacity: 0.7;
+}
+
+.delete-btn, .cancel-btn, .confirm-delete-btn {
+  border: 1px solid;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.confirm-delete-btn {
+  background: rgba(220, 53, 69, 0.1);
+  border-color: #dc3545;
+}
+
+.confirm-delete-btn:hover {
+  opacity: 0.9;
 }
