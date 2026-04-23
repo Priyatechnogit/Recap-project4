@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
 //import Color from "./Color/Color";
-import ColorInput from "./ColorInput";
+import ColorInput from "../ColorInput";
+import "./ColorForm.css"
 
 
 export default function ColorForm({ onAddColor }){
-const [formData ,setFormData] = useState({role:"Role",hex:"#rrggbb",contrastText:"#ffffff"});
+const [formData ,setFormData] = useState({role:"Role",hex:"#123456",contrastText:"#ffffff"});
 
 function handleSubmit(event){
     event.preventDefault();
@@ -26,7 +27,7 @@ function handleChange(event){
 
     setFormData((prevData) => ({
         ...prevData,
-        [event.target.name]:event.target.value
+        [name]: value // event.target.name and value
     }));
     
 }
@@ -34,16 +35,16 @@ function handleChange(event){
 return (
     <>
 
- <form onSubmit = {handleSubmit}>
+ <form onSubmit = {handleSubmit} className="color-form">
+    <div className="form-field">
     <label htmlFor="role">Role</label>
-    <br/>
     <input type="text"
     name="role"
     value={formData.role}
     onChange={handleChange}
     placeholder="Some Role"
-    id="role"/> <br/>
-
+    id="role"/> 
+</div>
     <ColorInput
         label="Hex"
         name="hex"
