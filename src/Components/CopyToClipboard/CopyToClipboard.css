@@ -1,0 +1,24 @@
+.copy-container {
+  margin-top: 8px;
+}
+
+.copy-btn {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover:not(:disabled) {
+  background: #e0e0e0;
+  border-color: #999;
+}
+
+.copy-btn:disabled {
+  background: #d4edda;
+  color: #155724;
+  cursor: not-allowed;
+}
