@@ -42,9 +42,9 @@
   opacity: 0.7;
 }
 
-.delete-btn, .cancel-btn, .confirm-delete-btn {
+.delete-btn, .cancel-btn, .confirm-delete-btn , .edit-btn{
   border: 1px solid;
-  background: transparent;
+  background: white;
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;

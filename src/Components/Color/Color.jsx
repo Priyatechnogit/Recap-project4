@@ -1,50 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ColorInput from "../ColorInput";
 import "./Color.css";
 
-export default function Color({ color, onDelete }) {
-  const [ showConfirm, setShowConfirm] = useState(false);
+export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdit, onCancel }) {
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [preview, setPreview] = useState(color);
 
-  const handleCancel = () => setShowConfirm(false);
+  // Updates the internal preview whenever edit mode is triggered
+  useEffect(() => {
+    setPreview(color);
+  }, [color, isEditing]);
 
-  const handleConfirmDelete = () => {
-    onDelete(color.id);
-    setShowConfirm(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPreview((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onUpdateColor(preview);
+  };
+
   return (
-    
-   <div
-   className="color-card"
-  style={{ backgroundColor: color.hex }}
-    
-   >
+    <div 
+      className="color-card" 
+      style={{ backgroundColor: isEditing ? preview.hex : color.hex }}
+    >
+      {!isEditing ? (
+        <>
+          <p className="hex">{color.hex}</p>
+          <p className="role">{color.role}</p>
+          <p className="contrast">{color.contrastText}</p>
 
-    <p className="hex">{color.hex}</p>
-    <p className="role">{color.role}</p>
-    <p className="contrast">{color.contrastText}</p>
-      
-      {/* Delete Button */}
-     {!showConfirm ? (
-        <button className="delete-btn" onClick={() => setShowConfirm(true)}>
-          Delete
-        </button>
+          {!showConfirm ? (
+            <button className="delete-btn" onClick={() => setShowConfirm(true)}>Delete</button>
+          ) : (
+            <div className="confirm-actions">
+              <button onClick={() => setShowConfirm(false)}>Cancel</button>
+              <button className="confirm-delete-btn" onClick={() => onDelete(color.id)}>Confirm</button>
+            </div>
+          )}
+          <button className="edit-btn" onClick={onEdit}>Edit</button>
+        </>
       ) : (
-        <div className="confirm-actions">
-          <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
-          <button className="confirm-delete-btn" onClick={handleConfirmDelete}>
-            Delete
-          </button>
-        </div>
+        <form onSubmit={handleSubmit} className="edit-form">
+          <div className="edit-row">
+            <label>Role</label>
+            <input name="role" value={preview.role} onChange={handleChange} />
+          </div>
+          
+          <ColorInput label="Hex" name="hex" value={preview.hex} onChange={handleChange} />
+          <ColorInput label="Contrast" name="contrastText" value={preview.contrastText} onChange={handleChange} />
+
+          <div className="confirm-actions">
+            <button type="submit">UPDATE</button>
+            <button type="button" onClick={onCancel}>CANCEL</button>
+          </div>
+        </form>
       )}
-
-         {showConfirm && (
-      <p className="color-card-highlight">
-        Really Delete {color.role} color?
-      </p>
-    )}
-   </div>
-
+    </div>
   );
-   
 }
-
- 
