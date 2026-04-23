@@ -3,9 +3,12 @@ import Color from "./Components/Color/Color.jsx";
 import "./App.css";
 import ColorForm from "./Components/ColorForm/ColorForm.jsx";
 import { useState } from "react";
+import useLocalStorageState from "use-local-storage-state";
 
 function App() {
-  const [colors, setColors] = useState(initialColors);
+  const [colors, setColors] = useLocalStorageState("colors", {
+    defaultValue: initialColors,
+  });
   const [editedColor, setEditedColor] = useState(null);
 
   const addColor = (newColor) => {
@@ -22,7 +25,7 @@ function App() {
 
   // Edit function 
 
-  const editColor = (color) => setEditedColor(color);
+ // const editColor = (color) => setEditedColor(color);
   // update
 
   const updateColor = (updatedColor) => {

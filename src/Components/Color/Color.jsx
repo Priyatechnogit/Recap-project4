@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
-import ColorInput from "../ColorInput";
+import ColorInput from "../ColorInput/ColorInput";
 import "./Color.css";
 
 export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdit, onCancel }) {
   const [showConfirm, setShowConfirm] = useState(false);
-  const [preview, setPreview] = useState(color);
+  const [preview, setPreview] = useState(color|| { 
+  role: "", 
+  hex: "#000000", 
+  contrastText: "#000000" 
+});
 
   // Updates the internal preview whenever edit mode is triggered
   useEffect(() => {
-    setPreview(color);
+     if (isEditing) {
+    setPreview(color);}
   }, [color, isEditing]);
 
   const handleChange = (e) => {
@@ -24,7 +29,9 @@ export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdi
   return (
     <div 
       className="color-card" 
-      style={{ backgroundColor: isEditing ? preview.hex : color.hex }}
+      style={{ backgroundColor: isEditing ? preview.hex : color.hex,
+        color: isEditing ? preview.contrastText : color.contrastText 
+      }}
     >
       {!isEditing ? (
         <>
@@ -50,7 +57,7 @@ export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdi
           </div>
           
           <ColorInput label="Hex" name="hex" value={preview.hex} onChange={handleChange} />
-          <ColorInput label="Contrast" name="contrastText" value={preview.contrastText} onChange={handleChange} />
+          <ColorInput label="Contrast Text" name="contrastText" value={preview.contrastText} onChange={handleChange} />
 
           <div className="confirm-actions">
             <button type="submit">UPDATE</button>

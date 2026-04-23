@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
 //import Color from "./Color/Color";
-import ColorInput from "../ColorInput";
+import ColorInput from "../ColorInput/ColorInput";
 import "./ColorForm.css"
 
 
 export default function ColorForm({ onAddColor, onUpdateColor, editingColor}){
-const [formData ,setFormData] = useState({role:"Role",hex:"#123456",contrastText:"#ffffff"});
+const [formData ,setFormData] = useState({role:"Role",hex:"#123456",contrastText:"#123456"});
 
 function handleSubmit(event){
     event.preventDefault();
@@ -17,7 +17,7 @@ function handleSubmit(event){
         contrastText: formData.contrastText
     };
     onAddColor(newColor);
-    setFormData({ role: "Role", hex: "#123456", contrastText: "#ffffff" }); // to reset after form submission
+    setFormData({ role: "Role", hex: "#123456", contrastText: "#123456" }); // to reset after form submission
     console.log("New Color:" , newColor);
     
 }
