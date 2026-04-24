@@ -76,3 +76,20 @@
 .hex-row .hex {
   margin: 0;
 }
+
+.color-details {
+  margin: 8px 0;
+}
+
+.contrast-score {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  margin: 2px 0;
+  background: #f8f9fa;
+  font-weight: 500;
+}
+
+.contrast-score strong {
+  color: #007bff;
+}
