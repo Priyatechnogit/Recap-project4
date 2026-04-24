@@ -1,50 +1,79 @@
-import { initialColors } from "./lib/colors.js";
-import Color from "./Components/Color/Color.jsx";
 import "./App.css";
-import ColorForm from "./Components/ColorForm/ColorForm.jsx";
 import { useState } from "react";
-import useLocalStorageState from "use-local-storage-state";
-import useColors from "./Components/hooks/useColor.js";
+
+import useThemes from "./Components/hooks/useThemes.js"
+import Color from "./Components/Color/Color.jsx";
+import ColorForm from "./Components/ColorForm/ColorForm.jsx";
+import ThemeBar from "./Components/ThemeBar/ThemeBar.jsx";
 
 function App() {
-   const { colors, addColor, deleteColor, updateColor } =
-    useColors(initialColors);
+  const {
+    themes,
+    activeTheme,
+    activeThemeId,
+    setActiveThemeId,
+    addColor,
+    deleteColor,
+    updateColor,
+    updateThemeName,
+    deleteTheme,
+  } = useThemes();
 
   const [editedColor, setEditedColor] = useState(null);
 
-  const handleEdit = (color) => setEditedColor(color);
+  const [isEditingTheme, setIsEditingTheme] = useState(false);
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+  const [themeNameInput, setThemeNameInput] = useState("");
 
-  const handleCancel = () => setEditedColor(null);
-    
+  const isDefault = activeTheme?.isDefault;
 
-   return (
+  if (!activeTheme) return <p>Loading...</p>;
+
+  return (
     <>
-      <ColorForm 
-      onAddColor={addColor} 
-      onUpdateColor={updateColor}
-      editingColor={editedColor}
-      onCancel={handleCancel}
-      />
-
       <h1>Theme Creator</h1>
 
-      {colors.length === 0 ? (
-        <p className="color-card-highlight">
-          No colors in your theme yet... Start by adding one!!
-        </p>
+      {/* Themebar */}
+      <ThemeBar
+        themes={themes}
+        activeThemeId={activeThemeId}
+        setActiveThemeId={setActiveThemeId}
+
+        isEditingTheme={isEditingTheme}
+        setIsEditingTheme={setIsEditingTheme}
+        themeNameInput={themeNameInput}
+        setThemeNameInput={setThemeNameInput}
+        updateThemeName={updateThemeName}
+
+        isConfirmingDelete={isConfirmingDelete}
+        setIsConfirmingDelete={setIsConfirmingDelete}
+        deleteTheme={deleteTheme}
+
+        isDefault={isDefault}
+      />
+
+      {/* Colorform */}
+      <ColorForm
+        onAddColor={addColor}
+        onUpdateColor={updateColor}
+        editingColor={editedColor}
+        onCancel={() => setEditedColor(null)}
+      />
+
+      {/* Colors */}
+      {activeTheme.colors.length === 0 ? (
+        <p>No colors yet...</p>
       ) : (
         <ul className="color-list">
-          {colors.map((color) => (
-            <li key={color.id} className="color-item">
-              <Color
-                color={color}
-                onDelete={deleteColor}
-                onEdit={() => handleEdit(color)}
-                onCancel={handleCancel}
-                isEditing={editedColor?.id === color.id}
-                onUpdateColor={updateColor}
-              />
-            </li>
+          {activeTheme.colors.map((color) => (
+            <Color
+              key={color.id}
+              color={color}
+              onDelete={deleteColor}
+              onEdit={() => setEditedColor(color)}
+              isEditing={editedColor?.id === color.id}
+              onUpdateColor={updateColor}
+            />
           ))}
         </ul>
       )}
