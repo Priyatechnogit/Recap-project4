@@ -4,35 +4,18 @@ import "./App.css";
 import ColorForm from "./Components/ColorForm/ColorForm.jsx";
 import { useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
+import useColors from "./Components/hooks/useColor.js";
 
 function App() {
-  const [colors, setColors] = useLocalStorageState("colors", {
-    defaultValue: initialColors,
-  });
+   const { colors, addColor, deleteColor, updateColor } =
+    useColors(initialColors);
+
   const [editedColor, setEditedColor] = useState(null);
 
-  const addColor = (newColor) => {
-    setColors((prevColors) => [newColor, ...prevColors]);
-  };
+  const handleEdit = (color) => setEditedColor(color);
 
-  // Delete function
-
-  const deleteColor = (idToDelete) => {
-    setColors(prevColors => 
-      prevColors.filter(color => color.id !== idToDelete)
-    );
-  };
-
-  // Edit function 
-
- // const editColor = (color) => setEditedColor(color);
-  // update
-
-  const updateColor = (updatedColor) => {
-     setColors(prevColors => 
-      prevColors.map((color) => color.id === updatedColor.id?  updatedColor : color));
-      setEditedColor(null);   // edit mode exit
-     };
+  const handleCancel = () => setEditedColor(null);
+    
 
    return (
     <>
@@ -40,6 +23,7 @@ function App() {
       onAddColor={addColor} 
       onUpdateColor={updateColor}
       editingColor={editedColor}
+      onCancel={handleCancel}
       />
 
       <h1>Theme Creator</h1>
@@ -55,8 +39,8 @@ function App() {
               <Color
                 color={color}
                 onDelete={deleteColor}
-                onEdit={() => setEditedColor(color)}
-                onCancel={() => setEditedColor(null)}
+                onEdit={() => handleEdit(color)}
+                onCancel={handleCancel}
                 isEditing={editedColor?.id === color.id}
                 onUpdateColor={updateColor}
               />

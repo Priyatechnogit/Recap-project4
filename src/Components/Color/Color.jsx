@@ -2,19 +2,28 @@ import { useState, useEffect } from "react";
 import ColorInput from "../ColorInput/ColorInput";
 import "./Color.css";
 import CopyToClipboard from "../CopyToClipboard/CopyToClipboard";
+import useContrast from "../hooks/useContrast";
+//import ContrastChecker from "../ContrastChecker/ContrastChecker";
 
 export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdit, onCancel }) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [preview, setPreview] = useState(color|| { 
   role: "", 
   hex: "#000000", 
-  contrastText: "#000000" 
+  contrastText: "#000000" ,
+  id: "null"
 });
+
+const { score, loading, checkContrast } = useContrast();
+
+
 
   // Updates the internal preview whenever edit mode is triggered
   useEffect(() => {
      if (isEditing) {
-    setPreview(color);}
+    setPreview({
+  ...color
+});}
   }, [color, isEditing]);
 
   const handleChange = (e) => {
@@ -22,10 +31,22 @@ export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdi
     setPreview((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onUpdateColor(preview);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const result = await checkContrast(
+    preview.hex,
+    preview.contrastText
+  );
+
+  const updatedColor = {
+    ...preview,
+    contrastScore: result?.overall
   };
+
+  onUpdateColor(updatedColor);
+  onCancel();
+};
 
   return (
     <div 
@@ -41,6 +62,15 @@ export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdi
             <CopyToClipboard hexValue={color.hex} />
         </div>
           <p className="role">{color.role}</p>
+
+         {loading && <p>Checking...</p>}
+
+ {color.contrastScore && (
+  <div>
+    Overall contrast score: {color.contrastScore}
+  </div>
+)}
+    
           <p className="contrast">{color.contrastText}</p>
           
 
@@ -70,6 +100,7 @@ export default function Color({ color, onDelete, isEditing, onUpdateColor, onEdi
           </div>
         </form>
       )}
+      
     </div>
   );
 }
